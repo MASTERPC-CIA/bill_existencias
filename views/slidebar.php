@@ -8,7 +8,7 @@
         </div>
 
         <ul class="sidebar-menu">
-            <li class="header">EX&Aacute;MENES DE LABORATORIO</li>
+            <li class="header">PRODUCTOS</li>
             <li> <a href="<?= base_url('existencias/index') ?>"><i class="glyphicon glyphicon-list"></i> Ver existencias</a> </li>
         </ul>
     </section>

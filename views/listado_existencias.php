@@ -49,7 +49,7 @@ if (!empty($data)):
         } else {
             echo tagcontent('td', tagcontent('span', 'NO DISPONIBLE', array('class' => 'label label-warning', 'style' => 'font-size:16px')));
         }
-        echo tagcontent('td', "$ " . $val->costopromediokardex);
+        echo tagcontent('td', "$ " . number_format($val->costopromediokardex, get_settings('NUM_DECIMALES')));
         /* echo tagcontent('td', $val->stock, array('style' => 'max-width: 30em')); */
         echo Close('tr');
     }
@@ -127,13 +127,13 @@ echo Close('div');
         line-height: 1.8;
         text-align: center;
         cursor: pointer;
-        background: #bce8f1;
+        background: #dff0d8;
         color: #000;
         margin-right: 0.5em;
     }
 
     div.pager span.active {
-        background: #31708f;
+        background: #3c763d;
     }
 
 </style>
