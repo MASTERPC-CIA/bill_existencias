@@ -18,37 +18,39 @@ echo Open('div', array('id' => 'div_solicitudes_list', 'class' => 'col-md-12'));
 echo Open('div', array('id' => 'div_header', 'style' => ''));
 //$this->load->view('common/hmc_head/encabezado_cuenca');
 echo Close('div');
+echo '<span class="pull-left"><strong>Ver: </strong></span>';
 echo LineBreak(1);
-
-echo Open('table', array('id' => 'table_sol', 'class' => "table table-fixed-header"));
+?>
+<select id="limit" name="limit" >
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+</select><div></div>
+<?php
+echo Open('table', array('id' => "paginated", 'name' => "paginated", 'class' => "paginated table table-fixed-header", 'cellspacing' => "0", 'width' => "100%")); // 
 echo '<thead>';
+echo '<tr>';
 echo '<th>CODIGO</th>';
 echo '<th>Nombre Producto</th>';
 echo '<th>Stock</th>';
 echo '<th>Precio</th>';
-// echo '<th class="actions">Acciones</th>';
+echo '</tr>';
 echo '</thead>';
 echo '<tbody>';
 if (!empty($data)):
     foreach ($data as $val) {
         echo Open('tr');
-        echo tagcontent('td class="actions"', $val->codigo);
+        echo tagcontent('td', $val->codigo);
         echo tagcontent('td', $val->nombreUnico);
         //echo tagcontent('td', $val->stock);
         if ($val->stock == "Disponible") {
             echo tagcontent('td', tagcontent('span', 'DISPONIBLE', array('class' => 'label label-success', 'style' => 'font-size:16px')));
         } else {
             echo tagcontent('td', tagcontent('span', 'NO DISPONIBLE', array('class' => 'label label-warning', 'style' => 'font-size:16px')));
-        } 
-        echo tagcontent('td', "$ ". $val->costopromediokardex);
+        }
+        echo tagcontent('td', "$ " . $val->costopromediokardex);
         /* echo tagcontent('td', $val->stock, array('style' => 'max-width: 30em')); */
-        echo '<td class="actions">';
-        ?>
-        <!--<button type="button"  title = "Imprimir" data-target="print_solicitud" class="btn btn-success fa fa-print" id="ajaxpanelbtn" data-url="<?php echo base_url('laboratorio/index/mostrar_solicitud/' . $val->sol_id) ?>"></button>-->
-        <!--<button type="button"  title = "Editar" data-target="opcion_elegida" class="btn btn-primary fa fa-edit" id="ajaxpanelbtn" data-url="<?php echo base_url('laboratorio/laboratorio/modificar_solicitud/' . $val->sol_id) ?>"></button>-->
-        <!--<button type="button" name="btnreportes" title = "Anular" data-target="print_solicitud" class="btn btn-danger fa fa-trash-o" id="ajaxpanelbtn" data-url="<?php echo base_url('laboratorio/index/anular_solicitud_view/' . $val->sol_id) ?>"></button>-->
-        <?php
-        echo '</td>';
         echo Close('tr');
     }
 endif;
@@ -58,7 +60,7 @@ echo '</div>';
 echo Close('div');
 ?>
 <script>
-    var $rows = $('#table_sol tr');
+    var $rows = $('#paginated tr');
     $('#search_sol').keyup(function () {
         var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 
@@ -74,5 +76,65 @@ echo Close('div');
     } else {
 //    alert('funcion no existe');
     }
+    var str = 10;
+    $('table.paginated').each(function () {
+        var currentPage = 0;
+        var numPerPage = str;
+        var $table = $(this);
+        $table.bind('repaginate', function () {
+            $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+        });
+        $table.trigger('repaginate');
+        var numRows = $table.find('tbody tr').length;
+        var numPages = Math.ceil(numRows / numPerPage);
+        var $pager = $('<div class="pager"></div>');
+        for (var page = 0; page < numPages; page++) {
+            $('<span class="page-number"></span>').text(page + 1).bind('click', {
+                newPage: page
+            }, function (event) {
+                currentPage = event.data['newPage'];
+                $table.trigger('repaginate');
+                $(this).addClass('active').siblings().removeClass('active');
+            }).appendTo($pager).addClass('clickable');
+        }
+        $pager.insertBefore($table).find('span.page-number:first').addClass('active');
+    });
+
+    function show(min, max) {
+        var $table = $('#paginated'), $rows = $table.find('tbody tr');
+        min = min ? min - 1 : 0;
+        max = max ? max : $rows.length;
+        $rows.hide().slice(min, max).show();
+        return false;
+    }
+
+    $('#limit').bind('change', function () {
+        show(0, this.value);
+    });
 </script>
+
+
+<style>
+    div.pager {
+        text-align: center;
+        margin: 1em 0;
+    }
+
+    div.pager span {
+        display: inline-block;
+        width: 1.8em;
+        height: 1.8em;
+        line-height: 1.8;
+        text-align: center;
+        cursor: pointer;
+        background: #000;
+        color: #fff;
+        margin-right: 0.5em;
+    }
+
+    div.pager span.active {
+        background: #c00;
+    }
+
+</style>
 
