@@ -2,7 +2,7 @@
 echo tagcontent('div', '', array('id' => 'print_solicitud', 'class' => 'col-md-12'));
 
 echo Open('div', array('class' => 'panel panel-heading'));
-echo '<strong><center>'. get_settings('RAZON_SOCIAL') . '</center></strong>';
+echo '<strong><center>' . get_settings('RAZON_SOCIAL') . '</center></strong>';
 echo Close('div');
 
 echo Open('div', array('class' => 'panel panel-info'));
@@ -18,9 +18,9 @@ echo Open('div', array('class' => 'col-md-3'));
 echo input(array('id' => 'kardex_product_autosug', 'data-url' => base_url('common/autosuggest/get_product_by_name/%QUERY'), 'class' => 'form-control input-sm typeahead', 'Placeholder' => 'Busca Productos y servicios'));
 echo Close('div');
 
-/*echo Open('div', array('class' => 'col-md-2'));
-echo input(array('id' => 'kardex_product_by_cod_autosug', 'data-url' => base_url('common/autosuggest/get_product_by_cod/%QUERY'), 'class' => 'form-control input-sm typeahead', 'Placeholder' => 'Codigo Del Producto'));
-echo Close('div');*/
+/* echo Open('div', array('class' => 'col-md-2'));
+  echo input(array('id' => 'kardex_product_by_cod_autosug', 'data-url' => base_url('common/autosuggest/get_product_by_cod/%QUERY'), 'class' => 'form-control input-sm typeahead', 'Placeholder' => 'Codigo Del Producto'));
+  echo Close('div'); */
 
 echo tagcontent('div', 'Seleccione un producto para consultar', array('id' => 'nombre_producto', 'class' => 'col-md-7'));
 
@@ -66,4 +66,13 @@ echo Close('div');
     $.load_autosugest('#kardex_product_autosug', load_product, 4, 10, 'id');
     //$.load_autosugest('#kardex_product_by_cod_autosug', load_product, 2, 10, 'id');
 //    });
+
+    $('#kardex_product_autosug').on('click', function () {
+        console.log("here");
+        $('#product_id').attr('value', '');
+        $('#nombre_producto').attr('value', '');
+        $('#nombre_producto').html('');
+        $('#kardex_product_autosug').attr('value', '');
+        $('#kardex_product_autosug').val('');
+    });
 </script>

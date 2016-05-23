@@ -1,6 +1,6 @@
 <?php
 /* Boton Imprimir */
-echo tagcontent('button', '<span class="glyphicon glyphicon-print"></span> Imprimir', array('id' => 'printbtn', 'data-target' => 'div_solicitudes_list', 'class' => 'btn btn-default pull-left'));
+//echo tagcontent('button', '<span class="glyphicon glyphicon-print"></span> Imprimir', array('id' => 'printbtn', 'data-target' => 'div_solicitudes_list', 'class' => 'btn btn-default pull-left'));
 /* METODO PARA EXPORTA A EXCEL */
 /* echo tagcontent('a', '<span class="glyphicon glyphicon-export"></span> Exportar a Excel', 
   array('href' => base_url('laboratorio/index/export_solicitudes_to_excel/'. $id_servicio. '/' . $id_tipo_form .'/'.$paciente_tipo.'/' . $fecha_emision_desde . '/' . $fecha_emision_hasta. '/' . $fecha_realiz_desde. '/' . $fecha_realiz_hasta. '/' . $id_prof_solicita. '/' . $id_paciente),
@@ -127,13 +127,13 @@ echo Close('div');
         line-height: 1.8;
         text-align: center;
         cursor: pointer;
-        background: #000;
-        color: #fff;
+        background: #bce8f1;
+        color: #000;
         margin-right: 0.5em;
     }
 
     div.pager span.active {
-        background: #c00;
+        background: #31708f;
     }
 
 </style>
