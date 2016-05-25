@@ -25,7 +25,9 @@ class Index extends MX_Controller {
 
     public function get_productogrupo() {
         $fields = 'codigo, nombre'; //billing_productogrupo
-        $formularios = $this->generic_model->get('billing_productogrupo', null, $fields, null, 0);
+        $where_data = array();
+        $where_data['vista_web'] = 1;
+        $formularios = $this->generic_model->get('billing_productogrupo', $where_data, $fields, null, 0);
         return $formularios;
     }
 

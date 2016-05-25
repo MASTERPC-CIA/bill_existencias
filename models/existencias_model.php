@@ -17,7 +17,9 @@ class Existencias_model extends CI_Model {
         if (!empty($lista_form_grupo)) {
             $where_data['pro.productogrupo_codigo'] = $lista_form_grupo;
         }
-
+        
+        $where_data['vista_web'] = 1;
+        
         $join_cluase = array(
             '0' => array('table' => 'billing_stockbodega st', 'condition' => 'st.producto_codigo = pro.codigo'),
             '1' => array('table' => 'billing_productogrupo pg', 'condition' => 'pg.codigo = pro.productogrupo_codigo')
