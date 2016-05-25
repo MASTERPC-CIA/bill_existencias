@@ -26,10 +26,10 @@ echo tagcontent('div', 'Seleccione un producto para consultar', array('id' => 'n
 
 echo lineBreak2();
 //Filtro por Tipo de Formulario
-echo Open('div', array('class' => 'col-md-3 form-group'));
+echo Open('div', array('class' => 'col-md-6 form-group'));
 echo Open('div', array('class' => 'input-group'));
 echo tagcontent('span', 'Grupo producto: ', array('class' => 'input-group-addon'));
-echo combobox($productogrupo, array('label' => 'nombre', 'value' => 'codigo'), array('id' => 'lista_form_grupo', 'name' => 'lista_form_grupo', 'class' => 'form-control input-sm combobox'), true);
+echo combobox($productogrupo, array('label' => 'nombre', 'value' => 'codigo'), array('id' => 'lista_form_grupo', 'name' => 'lista_form_grupo', 'class' => 'form-control input-sm custom-select'), true); //combobox
 echo Close('div');
 echo Close('div');
 
@@ -74,5 +74,9 @@ echo Close('div');
         $('#nombre_producto').html('');
         $('#kardex_product_autosug').attr('value', '');
         $('#kardex_product_autosug').val('');
+    });
+
+    $(function () {
+        $(".custom-select").customselect();
     });
 </script>
