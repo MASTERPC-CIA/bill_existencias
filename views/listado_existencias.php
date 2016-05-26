@@ -50,18 +50,25 @@ echo LineBreak(1);
 </div>
 
 <?php
-echo Open('table', array('id' => 'tablesorter', 'class' => "tablesorter", 'cellspacing' => "2", 'width'=>"100%")); // 
+echo Open('table', array('id' => 'tablesorter', 'class' => "tablesorter", 'cellspacing' => "2", 'width' => "100%")); // 
 echo '<thead>';
 echo '<tr>';
 echo '<th width="10%">CODIGO  </th>';
-echo '<th width="70%">Nombre Producto </th>';
+echo '<th width="60%">Nombre Producto </th>';
 echo '<th width="10%">Stock </th>';
 echo '<th width="10%">Precio </th>';
+echo '<th width="10%">Imagen </th>';
+
 echo '</tr>';
 echo '</thead>';
 echo '<tbody>';
 if (!empty($data)):
     foreach ($data as $val) {
+
+        $imagen = "https://googledrive.com/host/0ByqQkg3INrbzQWR5aXdDWjc5UG8/" . $val->codigo . ".jpg";
+        $nombre = "'".$val->nombreUnico."'";
+        $link = '<a title="" href="#" onclick="afoto(' . $val->codigo . ', ' . $nombre . ')">Ver</a>';
+
         echo Open('tr');
         echo tagcontent('td ', $val->codigo);
         echo tagcontent('td', $val->nombreUnico);
@@ -72,6 +79,7 @@ if (!empty($data)):
             echo tagcontent('td', tagcontent('span', 'NO DISPONIBLE', array('class' => 'label label-warning', 'style' => 'font-size:16px')));
         }
         echo tagcontent('td', "$ " . number_format($val->costopromediokardex, get_settings('NUM_DECIMALES')));
+        echo tagcontent('td', $link, array('style' => 'width:10px'));
         /* echo tagcontent('td', $val->stock, array('style' => 'max-width: 30em')); */
         echo Close('tr');
     }
@@ -81,3 +89,26 @@ echo '</table>';
 echo '</div>';
 echo Close('div');
 ?>
+<script>
+
+    var ventana;
+    var cont = 0;
+    function afoto(toLink, nombre) {
+        var titulopordefecto = nombre; //get_settings("RAZON_SOCIAL")
+        var img = "https://googledrive.com/host/0ByqQkg3INrbzQWR5aXdDWjc5UG8/" + toLink + ".jpg";
+        if (cont == 1) {
+            ventana.close();
+            ventana = null
+        }
+
+        ventana = window.open('', 'ventana', 'resizable=yes,scrollbars=no')
+        ventana.document.write('<html><head><title>' + titulopordefecto + '</title></head><body style="overflow:hidden" marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" scroll="no" onUnload="opener.cont=0"><img src="' + img + '" onLoad="opener.redimensionar(500, 500)" width="500px" heigth="500px">');
+        ventana.document.close();
+        cont++;
+    }
+    function redimensionar(ancho, alto) {
+        //ventana.resizeTo(ancho + 12, alto + 28);
+        ventana.resizeTo(ancho, alto);
+        ventana.moveTo((screen.width - ancho) / 2, (screen.height - alto) / 2); //centra la ventana. Eliminar si no se quiere centrar el 
+    }
+</script>
